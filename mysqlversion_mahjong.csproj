@@ -1,0 +1,115 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{D42DC3BC-73E6-4BC4-B2E5-AFF7BAC649B5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>WindowsApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>mysqlversion_mahjong</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>D:\download\mysql-connector-net-8.0.24-noinstall\v4.5.2\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>D:\download\mysql-connector-net-8.0.24-noinstall\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web">
+      <HintPath>D:\download\mysql-connector-net-8.0.24-noinstall\v4.5.2\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Zstandard.Net">
+      <HintPath>D:\download\mysql-connector-net-8.0.24-noinstall\v4.5.2\Zstandard.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="MahJong\bin\Debug\MahJong.exe" />
+    <Content Include="MahJong\bin\Debug\MahJong.pdb" />
+    <Content Include="MahJong\obj\Debug\MahJong.csproj.FileListAbsolute.txt" />
+    <Content Include="MahJong\obj\Debug\MahJong.exe" />
+    <Content Include="MahJong\obj\Debug\MahJong.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vs\MahJong\v16\.suo" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="app.config" />
+    <None Include="MahJong\App.config" />
+    <None Include="MahJong\bin\Debug\MahJong.exe.config" />
+    <None Include="MahJong\MahJong.csproj" />
+    <None Include="MahJong\obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="MahJong\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="MahJong\obj\Debug\MahJong.csproj.CoreCompileInputs.cache" />
+    <None Include="MahJong\obj\Debug\MahJong.csproj.GenerateResource.cache" />
+    <None Include="MahJong\obj\Debug\MahJong.csprojAssemblyReference.cache" />
+    <None Include="MahJong\Properties\Settings.settings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MahJong\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MahJong\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MahJong\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="MahJong\obj\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="MahJong\Program.cs" />
+    <Compile Include="MahJong\Properties\AssemblyInfo.cs" />
+    <Compile Include="MahJong\Properties\Resources.Designer.cs" />
+    <Compile Include="MahJong\Properties\Settings.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MahJong\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MahJong\obj\Debug\MahJong.Form1.resources" />
+    <EmbeddedResource Include="MahJong\obj\Debug\MahJong.Properties.Resources.resources" />
+    <EmbeddedResource Include="MahJong\Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\mysqlversion_mahjong\v16\" />
+    <Folder Include="MahJong\bin\Release\" />
+    <Folder Include="MahJong\obj\Debug\TempPE\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
