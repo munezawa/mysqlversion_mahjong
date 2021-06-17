@@ -15,36 +15,40 @@ namespace MahJong
     public partial class Form1 : Form
     {
         Form Form2;
-         int Fafu;
+        int Fafu;
+        int flag1 = 0;
+        int flag2 = 0;
+        int flag3 = 0;
         public Form1()
         {
             InitializeComponent();
+            this.ControlBox = false;
         }
         public void FaFu(int a)
         {
             string str1;
             if (checkBox1.Checked)
             {
-                str1 = string.Format($"update 选手 set 点数 = 点数-1000" + $"where 座次 = 1");
+                str1 = string.Format($"update 选手 set 点数 = 点数-1000 where 座次 = 1");
                 Mahjong_GetSqlCmd(str1);
-                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000"  );
+                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000");
                 Mahjong_GetSqlCmd(str1);
             }
             if (checkBox2.Checked)
             {
-                str1 = string.Format($"update 选手 set 点数 = 点数-1000" + $"where 座次 = 2");
+                str1 = string.Format($"update 选手 set 点数 = 点数-1000 where 座次 = 2");
                 Mahjong_GetSqlCmd(str1);
-                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000"  );
+                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000");
                 Mahjong_GetSqlCmd(str1);
             }
             if (checkBox3.Checked)
             {
-                str1 = string.Format($"update 选手 set 点数 = 点数-1000" + $"where 座次 = 3");
+                str1 = string.Format($"update 选手 set 点数 = 点数-1000 where 座次 = 3");
                 Mahjong_GetSqlCmd(str1);
-                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000"  );
+                str1 = string.Format($"update 比赛 set 点棒 = 点棒+1000");
                 Mahjong_GetSqlCmd(str1);
             }
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
@@ -57,18 +61,18 @@ namespace MahJong
             }
             MySqlCommand cmd = new MySqlCommand("select * from 比赛", conn);
             //执行语句
-            MySqlDataReader msqlReader =cmd.ExecuteReader();
+            MySqlDataReader msqlReader = cmd.ExecuteReader();
             msqlReader.Read();
             Fafu = msqlReader.GetInt32("点棒");
             conn.Close();
             switch (a)
             {
-                case 0:break;
-                case 4:label20.Text = "+0"; label21.Text = "+0"; label22.Text = "+0"; break;
-                case 1:str1 = string.Format($"update 选手 set 点数 = 点数+'{Fafu}'" + $"where 座次 = 1"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"  ); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
-                case 2: str1 = string.Format($"update 选手 set 点数 = 点数+'{Fafu}'" + $"where 座次 = 2"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"  ); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
-                case 3: str1 = string.Format($"update 选手 set 点数= 点数+'{Fafu}'" + $"where 座次 = 3"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"  ); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
-                default:MessageBox.Show("error");break;
+                case 0: break;
+                case 4: label20.Text = "+0"; label21.Text = "+0"; label22.Text = "+0"; break;
+                case 1: str1 = string.Format($"update 选手 set 点数 = 点数+'{Fafu}' where 座次 = 1"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
+                case 2: str1 = string.Format($"update 选手 set 点数 = 点数+'{Fafu}' where 座次 = 2"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
+                case 3: str1 = string.Format($"update 选手 set 点数= 点数+'{Fafu}' where 座次 = 3"); Mahjong_GetSqlCmd(str1); str1 = string.Format($"update 比赛 set 点棒 = 0"); Mahjong_GetSqlCmd(str1); Fafu = 0; break;
+                default: MessageBox.Show("error"); break;
             }
         }
         public int SuDian()
@@ -101,7 +105,7 @@ namespace MahJong
         public int BaiBei(double a)
         {
             int b = (int)a;
-            if(b%100!=0)
+            if (b % 100 != 0)
             {
                 b = b / 100 * 100 + 100;
             }
@@ -109,7 +113,7 @@ namespace MahJong
         }
         private void button1_Click(object sender, EventArgs e)
         {
- 
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -123,9 +127,37 @@ namespace MahJong
         }
         public void Reload()
         {
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                // Perform database operations
+            }
+            catch (Exception ex)
+            {
+            }
+
+            MySqlCommand cmd = new MySqlCommand("select * from 选手", conn);
+            //执行语句
+            MySqlDataReader msqlReader = cmd.ExecuteReader();
+            //执行语句
+            msqlReader.Read();
+            label10.Text = msqlReader.GetString("点数");
+            label16.Text = msqlReader.GetString("胡牌次数");
+            msqlReader.Read();
+            label14.Text = msqlReader.GetString("点数");
+            label17.Text = msqlReader.GetString("胡牌次数");
+            msqlReader.Read();
+            label15.Text = msqlReader.GetString("点数");
+            label18.Text = msqlReader.GetString("胡牌次数");
+            conn.Close();
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
+            MySqlConnection conn = new MySqlConnection(connStr); try
             {
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
@@ -141,13 +173,9 @@ namespace MahJong
             this.label6.Text = ToRound(msqlReader.GetInt32("场次"));
             conn.Close();
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            Reload();
-        }
         public string ToRound(int a)
         {
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
@@ -158,33 +186,20 @@ namespace MahJong
             catch (Exception ex)
             {
             }
-            MySqlCommand cmd = new MySqlCommand("select * from 选手", conn);
-            //执行语句
-            MySqlDataReader msqlReader = cmd.ExecuteReader();
-            msqlReader.Read();
-            label10.Text = msqlReader.GetInt32("点数").ToString();
-            label16.Text = msqlReader.GetInt32("胡牌次数").ToString();
-            msqlReader.Read();
-            label14.Text = msqlReader.GetInt32("点数").ToString();
-            label17.Text = msqlReader.GetInt32("胡牌次数").ToString();
-            msqlReader.Read();
-            label15.Text = msqlReader.GetInt32("点数").ToString();
-            label18.Text = msqlReader.GetInt32("胡牌次数").ToString();
-            conn.Close();
-            string str1="error",str2="error";
-            switch(a%3)
-            { 
+            string str1 = "error", str2 = "error";
+            switch (a % 3)
+            {
                 case 1:
                     str1 = "一场";
                     break;
                 case 2:
                     str1 = "二场";
                     break;
-                case 0: 
+                case 0:
                     str1 = "三场";
                     break;
             }
-            switch(((a-1)%9)/3)
+            switch (((a - 1) % 9) / 3)
             {
                 case 1:
                     str2 = "南风";
@@ -200,7 +215,7 @@ namespace MahJong
         }
         static bool Mahjong_GetSqlCmd(string CmdStr)
         {
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
@@ -224,7 +239,7 @@ namespace MahJong
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
@@ -249,20 +264,23 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}'" + $"where 座次 = 2");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}' where 座次 = 2");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}'" + $"where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}' where 座次 = 3");
                         this.label21.Text = "-" + BaiBei(3 * SuDian());
                         this.label22.Text = "-" + BaiBei(3 * SuDian());
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update test.选手 set 点数 = 点数+'{2 * BaiBei(3 * SuDian())}',胡牌次数 = 胡牌次数+1,胡牌次数=胡牌次数+1 where 座次=1");
                         this.label20.Text = "+" + 2 * BaiBei(3 * SuDian());
                         Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', 'NULL','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
+
                         FaFu(1);
                     }
                     else if (radioButton36.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}' where 座次 = 1");
                         this.label20.Text = "-" + BaiBei(2.5 * SuDian());
@@ -274,10 +292,12 @@ namespace MahJong
                         this.label21.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', 'NULL','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}' where 座次 = 1");
                         this.label20.Text = "-" + BaiBei(2.5 * SuDian());
@@ -289,6 +309,8 @@ namespace MahJong
                         this.label22.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', 'NULL','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -333,7 +355,7 @@ namespace MahJong
                 case 2:
                     if (radioButton36.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a }',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a }',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}' where 座次 = 1");
                         this.label20.Text = "-" + BaiBei(3 * SuDian());
@@ -345,10 +367,12 @@ namespace MahJong
                         this.label21.Text = "+" + 2 * BaiBei(3 * SuDian());
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', 'NULL','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton37.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1 }',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1 }',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}' where 座次 = 2");
                         this.label21.Text = "-" + BaiBei(2.5 * SuDian());
@@ -360,10 +384,12 @@ namespace MahJong
                         this.label20.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', 'NULL','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}' where 座次 = 2");
                         this.label21.Text = "-" + BaiBei(2.5 * SuDian());
@@ -375,6 +401,8 @@ namespace MahJong
                         this.label22.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', 'NULL','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -422,20 +450,22 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}'" + $"where 座次 = 2");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}' where 座次 = 2");
                         this.label20.Text = "-" + BaiBei(3 * SuDian());
                         this.label21.Text = "-" + BaiBei(3 * SuDian());
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}'" + $"where 座次 = 1");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(3 * SuDian())}' where 座次 = 1");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{2 * BaiBei(3 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 3");
                         this.label22.Text = "+" + 2 * BaiBei(3 * SuDian());
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', 'NULL','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton36.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}'where 座次 = 3");
                         this.label22.Text = "-" + BaiBei(2.5 * SuDian());
@@ -447,10 +477,12 @@ namespace MahJong
                         this.label21.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', 'NULL','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton37.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(2.5 * SuDian())}'where 座次 = 3");
                         this.label22.Text = "-" + BaiBei(2.5 * SuDian());
@@ -462,6 +494,8 @@ namespace MahJong
                         this.label20.Text = "+" + (BaiBei(2.5 * SuDian()) + BaiBei(1.5 * SuDian()));
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', 'NULL','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -692,7 +726,7 @@ namespace MahJong
             SqlDataReader sdr = comm.ExecuteReader();
             sdr.Read();
             string str1;
-            int a=Convert.ToInt32(sdr["场次"].ToString());
+            int a = Convert.ToInt32(sdr["场次"].ToString());
             int b = Convert.ToInt32(sdr["局数"].ToString());
             switch (a % 3)
             {
@@ -727,11 +761,13 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
                         Mahjong_GetSqlCmd(str1);
                         this.label20.Text = "+1500";
                         this.label21.Text = "+1500";
-                        str1 = string.Format($"update 选手 set 点数 = 点数-3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-3000 where 座次 = 3");
                         this.label22.Text = "-3000";
                         Mahjong_GetSqlCmd(str1);
                     }
@@ -739,7 +775,9 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         Mahjong_GetSqlCmd(str1);
                         this.label20.Text = "+1500";
                         this.label22.Text = "+1500";
@@ -747,11 +785,13 @@ namespace MahJong
                         this.label21.Text = "-3000";
                         Mahjong_GetSqlCmd(str1);
                     }
-                    else if(radioButton4.Checked && radioButton7.Checked && radioButton2.Checked)
+                    else if (radioButton4.Checked && radioButton7.Checked && radioButton2.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         this.label21.Text = "+1500";
                         this.label22.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
@@ -766,38 +806,44 @@ namespace MahJong
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 1");
                         this.label20.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label21.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton7.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 2");
                         this.label21.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label20.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton8.Checked && radioButton2.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 3");
                         this.label22.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
                         this.label20.Text = "-1500";
                         this.label21.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton8.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                     }
                     else
@@ -817,7 +863,7 @@ namespace MahJong
                         checkBox1.Checked = false;
                         checkBox2.Checked = false;
                         checkBox3.Checked = false;
-                        MessageBox.Show("错误的操作","error");
+                        MessageBox.Show("错误的操作", "error");
                         break;
                     }
                     radioButton35.Checked = false;
@@ -872,19 +918,23 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
                         this.label20.Text = "+1500";
                         this.label21.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-3000 where 座次 = 3");
                         this.label22.Text = "-3000";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton1.Checked && radioButton8.Checked && radioButton2.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         this.label20.Text = "+1500";
                         this.label22.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
@@ -896,7 +946,9 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         this.label21.Text = "+1500";
                         this.label22.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
@@ -906,12 +958,14 @@ namespace MahJong
                     }
                     else if (radioButton1.Checked && radioButton8.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 1");
                         this.label20.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label21.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
@@ -923,26 +977,30 @@ namespace MahJong
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 2");
                         this.label21.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label20.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton8.Checked && radioButton2.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 3");
                         this.label22.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
                         this.label20.Text = "-1500";
                         this.label21.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton8.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                     }
                     else
@@ -1015,13 +1073,15 @@ namespace MahJong
                     }
                     else if (radioButton1.Checked && radioButton7.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
                         this.label20.Text = "+1500";
                         this.label21.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-3000 where 座次 = 3");
                         this.label22.Text = "-3000";
                         Mahjong_GetSqlCmd(str1);
                     }
@@ -1029,7 +1089,9 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         this.label20.Text = "+1500";
                         this.label22.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
@@ -1041,7 +1103,9 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数+1500 where 座次 = 3");
                         this.label21.Text = "+1500";
                         this.label22.Text = "+1500";
                         Mahjong_GetSqlCmd(str1);
@@ -1051,24 +1115,28 @@ namespace MahJong
                     }
                     else if (radioButton1.Checked && radioButton8.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 1");
                         this.label20.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (2,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label21.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton7.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 2");
                         this.label21.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,3)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 3");
                         this.label20.Text = "-1500";
                         this.label22.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
@@ -1077,17 +1145,19 @@ namespace MahJong
                     {
                         str1 = string.Format($"update 比赛 set 场次='{a}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数+3000where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数+3000 where 座次 = 3");
                         this.label22.Text = "+3000";
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-1500" + $"where 座次 = (1,2)");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 1");
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"update 选手 set 点数 = 点数-1500 where 座次 = 2");
                         this.label20.Text = "-1500";
                         this.label21.Text = "-1500";
                         Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton4.Checked && radioButton8.Checked && radioButton3.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                     }
                     else
@@ -1142,7 +1212,7 @@ namespace MahJong
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string connStr = "server=localhost;user=root;database=test;port=3306;password=1";
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
             MySqlConnection conn = new MySqlConnection(connStr);
             try
             {
@@ -1174,6 +1244,8 @@ namespace MahJong
                         this.label21.Text = "-" + BaiBei(6 * SuDian());
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox4.Text}','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                         FaFu(1);
                     }
                     else if (radioButton37.Checked && radioButton41.Checked)
@@ -1183,15 +1255,17 @@ namespace MahJong
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(6 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 1");
                         this.label20.Text = "+" + BaiBei(6 * SuDian());
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(6 * SuDian())}',放铳次数 = 放铳次数+1where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(6 * SuDian())}',放铳次数 = 放铳次数+1 where 座次 = 3");
                         this.label22.Text = "-" + BaiBei(6 * SuDian());
                         this.label21.Text = "+" + 0;
+                        Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox5.Text}','{Convert.ToInt32(label20.Text)}')");
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
                     }
                     else if (radioButton36.Checked && radioButton43.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1  where 座次 = 2");
                         this.label21.Text = "+" + BaiBei(4 * SuDian());
@@ -1200,11 +1274,13 @@ namespace MahJong
                         this.label20.Text = "-" + BaiBei(4 * SuDian());
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox3.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                         FaFu(2);
                     }
                     else if (radioButton36.Checked && radioButton41.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1  where 座次 = 2");
                         this.label21.Text = "+" + BaiBei(4 * SuDian());
@@ -1214,10 +1290,12 @@ namespace MahJong
                         this.label20.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox5.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton43.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 3");
                         this.label22.Text = "+" + BaiBei(4 * SuDian());
@@ -1227,10 +1305,12 @@ namespace MahJong
                         this.label21.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox3.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton42.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 3");
                         this.label22.Text = "+" + BaiBei(4 * SuDian());
@@ -1240,6 +1320,8 @@ namespace MahJong
                         this.label20.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox4.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -1284,7 +1366,7 @@ namespace MahJong
                 case 2:
                     if (radioButton37.Checked && radioButton42.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 1");
                         this.label20.Text = "+" + BaiBei(4 * SuDian());
@@ -1294,19 +1376,23 @@ namespace MahJong
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox4.Text}','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton37.Checked && radioButton41.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 1");
                         this.label20.Text = "+" + BaiBei(4 * SuDian());
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(4 * SuDian())}',放铳次数 = 放铳次数+1where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(4 * SuDian())}',放铳次数 = 放铳次数+1 where 座次 = 3");
                         this.label22.Text = "-" + BaiBei(4 * SuDian());
                         this.label21.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox5.Text}','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton36.Checked && radioButton43.Checked)
                     {
@@ -1320,6 +1406,8 @@ namespace MahJong
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox3.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton36.Checked && radioButton41.Checked)
                     {
@@ -1333,10 +1421,12 @@ namespace MahJong
                         this.label22.Text = "-" + BaiBei(6 * SuDian());
                         this.label20.Text = "+" + 0;
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox5.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton43.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 3");
                         this.label22.Text = "+" + BaiBei(4 * SuDian());
@@ -1346,10 +1436,12 @@ namespace MahJong
                         this.label21.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox3.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton42.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 3");
                         this.label22.Text = "+" + BaiBei(4 * SuDian());
@@ -1359,6 +1451,8 @@ namespace MahJong
                         this.label20.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox4.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -1403,7 +1497,7 @@ namespace MahJong
                 case 0:
                     if (radioButton37.Checked && radioButton42.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 1");
                         this.label20.Text = "+" + BaiBei(4 * SuDian());
@@ -1413,23 +1507,27 @@ namespace MahJong
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox4.Text}','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton37.Checked && radioButton41.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a+1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1 where 座次 = 1");
                         this.label20.Text = "+" + BaiBei(4 * SuDian());
                         Mahjong_GetSqlCmd(str1);
-                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(4 * SuDian())}',放铳次数 = 放铳次数+1where 座次 = 3");
+                        str1 = string.Format($"update 选手 set 点数 = 点数-'{BaiBei(4 * SuDian())}',放铳次数 = 放铳次数+1 where 座次 = 3");
                         this.label22.Text = "-" + BaiBei(4 * SuDian());
                         this.label21.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(1);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox3.Text}', '{textBox5.Text}','{Convert.ToInt32(label20.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton36.Checked && radioButton43.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1  where 座次 = 2");
                         this.label21.Text = "+" + BaiBei(4 * SuDian());
@@ -1439,10 +1537,12 @@ namespace MahJong
                         this.label22.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox3.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton36.Checked && radioButton41.Checked)
                     {
-                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'"  );
+                        str1 = string.Format($"update 比赛 set 场次='{a + 1}',局数='{b + 1}'");
                         Mahjong_GetSqlCmd(str1);
                         str1 = string.Format($"update 选手 set 点数 = 点数+'{BaiBei(4 * SuDian())}',胡牌次数 = 胡牌次数+1  where 座次 = 2");
                         this.label21.Text = "+" + BaiBei(4 * SuDian());
@@ -1452,6 +1552,8 @@ namespace MahJong
                         this.label20.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(2);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox4.Text}', '{textBox5.Text}','{Convert.ToInt32(label21.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton43.Checked)
                     {
@@ -1465,6 +1567,8 @@ namespace MahJong
                         this.label21.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox3.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else if (radioButton35.Checked && radioButton42.Checked)
                     {
@@ -1478,6 +1582,8 @@ namespace MahJong
                         this.label20.Text = "+" + 0;
                         Mahjong_GetSqlCmd(str1);
                         FaFu(3);
+                        str1 = string.Format($"INSERT INTO 记录 (`主要`, `次要`, `大小`) VALUES('{textBox5.Text}', '{textBox4.Text}','{Convert.ToInt32(label22.Text)}')");
+                        Mahjong_GetSqlCmd(str1);
                     }
                     else
                     {
@@ -1549,6 +1655,169 @@ namespace MahJong
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            String a = textBox3.Text;
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                // Perform database operations
+            }
+            catch (Exception ex)
+            {
+            }
+            MySqlCommand cmd = new MySqlCommand("select * from 玩家", conn);
+            //执行语句
+            MySqlDataReader msqlReader = cmd.ExecuteReader();
+            int flag = 0;
+            while (msqlReader.Read())
+            {
+                if(textBox3.Text == msqlReader.GetString("昵称"))
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag==1)
+            {
+                flag1 = 1;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录成功!", "Success");
+                label10.Text = msqlReader.GetString("点数");
+                label16.Text = msqlReader.GetString("胡牌次数");
+            }
+            else
+            {
+                flag1=0;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录失败!", "Fall");
+                label10.Text = "请登录";
+            }
+            String str1 = string.Format($"update 选手 set 点数 = '{label10.Text}',胡牌次数= '{label16.Text}' where 座次 = 1");
+            Mahjong_GetSqlCmd(str1);
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                // Perform database operations
+            }
+            catch (Exception ex)
+            {
+            }
+            MySqlCommand cmd = new MySqlCommand("select * from 玩家", conn);
+            //执行语句
+            MySqlDataReader msqlReader = cmd.ExecuteReader();
+            int flag = 0;
+            while (msqlReader.Read())
+            {
+                if (textBox4.Text == msqlReader.GetString("昵称"))
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 1)
+            {
+                flag2 = 1;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录成功!", "Success");
+                label14.Text = msqlReader.GetString("点数");
+                label17.Text = msqlReader.GetString("胡牌次数");
+            }
+            else
+            {
+                flag2 = 0;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录失败!", "Fall");
+                label14.Text = "请登录";
+            }
+            String str1 = string.Format($"update 选手 set 点数 = '{label14.Text}',胡牌次数= '{label17.Text}' where 座次 = 2");
+            Mahjong_GetSqlCmd(str1);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string connStr = "server=localhost;user=root;database=test;port=3306;password=2333";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                // Perform database operations
+            }
+            catch (Exception ex)
+            {
+            }
+            MySqlCommand cmd = new MySqlCommand("select * from 玩家", conn);
+            //执行语句
+            MySqlDataReader msqlReader = cmd.ExecuteReader();
+            int flag = 0;
+            while (msqlReader.Read())
+            {
+                if (textBox5.Text == msqlReader.GetString("昵称"))
+                {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 1)
+            {
+                flag3 = 1;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录成功!", "Success");
+                label15.Text = msqlReader.GetString("点数");
+                label18.Text = msqlReader.GetString("胡牌次数");
+            }
+            else
+            {
+                flag3 = 0;
+                Form2 = new Form();
+                MessageBox.Show(Form2, "登录失败!", "Fall");
+                label15.Text = "请登录";
+            }
+            String str1 = string.Format($"update 选手 set 点数 = '{label15.Text}',胡牌次数= '{label18.Text}' where 座次 = 3");
+            Mahjong_GetSqlCmd(str1);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            String str1 = string.Format($"update 玩家 set 点数 = '{label10.Text}',胡牌次数= '{label16.Text}'" + $"where 昵称 =  '{textBox3.Text}'");
+            Mahjong_GetSqlCmd(str1);
+            str1 = string.Format($"update 玩家 set 点数 = '{label14.Text}',胡牌次数= '{label17.Text}'" + $"where 昵称 =  '{textBox4.Text}'");
+            Mahjong_GetSqlCmd(str1);
+            str1 = string.Format($"update 玩家 set 点数 = '{label15.Text}',胡牌次数= '{label18.Text}'" + $"where 昵称 =  '{textBox5.Text}'");
+            Mahjong_GetSqlCmd(str1);
+
+            DialogResult result = MessageBox.Show("你确定要退出程序吗?", "操作提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (result == DialogResult.OK)
+            {
+                System.Environment.Exit(0);
+            }
+            else
+            {
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
         {
 
         }
