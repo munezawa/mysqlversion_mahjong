@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using mysqlversion_mahjong;
 
 namespace MahJong
 {
@@ -1819,6 +1820,8 @@ namespace MahJong
 
         private void button8_Click(object sender, EventArgs e)
         {
+            Form3 form = new Form3();
+            form.ShowDialog();
 
         }
     }
